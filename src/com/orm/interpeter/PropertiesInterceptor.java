@@ -5,7 +5,7 @@ package com.orm.interpeter;
  * @author Administrator
  *
  */
-public class XMLInterceptor {
+public class PropertiesInterceptor {
 
 	public static void main(String[] args) {
 

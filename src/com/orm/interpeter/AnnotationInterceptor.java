@@ -10,13 +10,14 @@ import com.entity.User;
 import com.orm.annotation.Column;
 import com.orm.annotation.PrimaryKey;
 import com.orm.annotation.Table;
+import com.orm.system.TableManager;
 //源码光盘+打印文档（组号写上）
 /**
  * 解析实体注解
  * @author Administrator
  *
  */
-public class AnnotationInterceptor<T> {
+public class AnnotationInterceptor<T> extends TableManager{
 	protected Class<T> className ;
 	private String tableName ;//表名
 	private String primaryKeyName ;//主键名称
@@ -184,6 +185,10 @@ public class AnnotationInterceptor<T> {
 		}
 		return primaryKeyValue ;
 	}
+	/**
+	 * 获取字段列表
+	 * @return
+	 */
 	public List<String> getFieldList(){
 		List<String> filedList = new ArrayList<String>();
 		for(Field filed : this.className.getDeclaredFields()){
@@ -193,6 +198,11 @@ public class AnnotationInterceptor<T> {
 		}
 		return filedList ;
 	}
+	/**
+	 * 主键查询
+	 * @param instance
+	 * @return
+	 */
 	public String generateQuerySqlByPrimaryKey(Object instance){
 		Object primaryKey = getPrimaryKeyValue(instance);
 		StringBuffer sb = new StringBuffer("select ");
@@ -204,6 +214,11 @@ public class AnnotationInterceptor<T> {
 		sb.append(" from " + this.tableName + " where " + this.primaryKeyName + " = " + this.getValuesByType(primaryKey));
 		return sb.toString() ;
 	}
+	/**
+	 * 条件查询
+	 * @param parameter
+	 * @return
+	 */
 	public String generateQuerySqlByParameters(Map<String, Object> parameter){
 		StringBuffer sb = new StringBuffer("select ");
 		int index = 0 , parameterSize = parameter.keySet().size();

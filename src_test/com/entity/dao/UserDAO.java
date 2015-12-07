@@ -10,6 +10,10 @@ public class UserDAO extends BasicDAO<User>{
 
 	public static void main(String[] args){
 		UserDAO userDao = new UserDAO(User.class);
-		//userDao.query("select * from User u where u.id = '1111' and passwd = 'fdas' ");
+		User u = new User();
+		u.setId("1");
+		u.setPasswd("uestc");
+		u.setGender("F");
+		userDao.create(u);
 	}
 }

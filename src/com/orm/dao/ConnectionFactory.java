@@ -13,7 +13,9 @@ import java.util.concurrent.BlockingQueue;
 public class ConnectionFactory extends Thread{
 	private static int poolSize = 20 ;
 	private static final BlockingQueue<Connection> connQueue = new ArrayBlockingQueue<>(poolSize);
-	
+	/**
+	 * æ≤Ã¨≥ı ºªØ
+	 */
 	static{
 		String url = "jdbc:mysql://localhost:3306/orm?user=root&password=&useUnicode=true&characterEncoding=UTF8";
 		try {

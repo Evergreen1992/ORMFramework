@@ -14,8 +14,18 @@ public class User {
 	@Column(columnName = "passwd")
 	private String passwd ;
 	
+	@Column(columnName = "gender")
+	private String gender ;
+	
 	@ForignKey(forignTableName = "t_address")
 	private Address address ;
+	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	
 	public Address getAddress() {
 		return address;

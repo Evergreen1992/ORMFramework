@@ -19,7 +19,22 @@ public class BasicDAO<T> extends AnnotationInterceptor<T> {
 	public BasicDAO(Class<T> t){
 		super(t);
 	}
-	
+	/**
+	 * 创建表
+	 * @param clas
+	 * @return
+	 */
+	public boolean newTable(Class<?> clas){
+		return this.createTable(clas);
+	}
+	/**
+	 * 删除表
+	 * @param clas
+	 * @return
+	 */
+	public boolean dropTable(Class<?> clas){
+		return this.deleteTable(clas);
+	}
 	/**
 	 * 创建一条记录
 	 * @param entity
@@ -64,14 +79,6 @@ public class BasicDAO<T> extends AnnotationInterceptor<T> {
 	public List<Object> query(Map<String, Object> parameters){
 		String sql = this.generateQuerySqlByParameters(parameters);
 		return this.executeQuery(sql) ;
-	}
-	/**
-	 * 按照查询语句查找
-	 * @param hql
-	 * @return
-	 */
-	public List<T> query(String hql){
-		return null ;
 	}
 	////////////////////////////////////////////////////////////////////
 	private boolean executeUpdate(String sql) {
