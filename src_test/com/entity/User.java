@@ -1,7 +1,6 @@
 package com.entity;
 
 import com.orm.annotation.Column;
-import com.orm.annotation.ForignKey;
 import com.orm.annotation.PrimaryKey;
 import com.orm.annotation.Table;
 
@@ -17,23 +16,12 @@ public class User {
 	@Column(columnName = "gender")
 	private String gender ;
 	
-	@ForignKey(forignTableName = "t_address")
-	private Address address ;
-	
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	public Address getAddress() {
-		return address;
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	
 	public String getId() {
 		return id;
 	}

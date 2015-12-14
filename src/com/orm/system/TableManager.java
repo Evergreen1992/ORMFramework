@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import com.orm.annotation.Column;
+import com.orm.annotation.ForignKey;
 import com.orm.annotation.PrimaryKey;
 import com.orm.annotation.Table;
 import com.orm.dao.ConnectionFactory;
@@ -21,21 +22,21 @@ public class TableManager {
 	 */
 	public boolean createTable(Class<?> clas){
 		Table table = (Table)clas.getAnnotation(Table.class);
+		ForignKey  fk = null ;
 		StringBuffer sql = new StringBuffer("create table " + table.tableName());
 			   sql.append("(");
 		for(Field field : clas.getDeclaredFields()){
 			Column column = field.getAnnotation(Column.class);
 			PrimaryKey pk = field.getAnnotation(PrimaryKey.class);
-			
+			fk = field.getAnnotation(ForignKey.class);
 			if( column != null ){
 				sql.append(column.columnName() + " ");
 				//数据类型	
-				if( field.getType().toString().contains("java.lang.String")){
-					sql.append("varchar(255)");
-				}else if(field.getType().toString().contains("java.lang.Integer")){
+				if(field.getType().toString().contains("java.lang.Integer")){
 					sql.append("int(11)");
+				}else{
+					sql.append("varchar(255)");
 				}
-				
 				//主键
 				if( pk != null ){
 					sql.append(" primary key , ");
@@ -43,13 +44,20 @@ public class TableManager {
 					sql.append(",");
 				}
 			}
-			
-			
 		}
 		if( clas.getDeclaredFields().length > 1)
 			sql.deleteCharAt(sql.lastIndexOf(","));
+		//外键关联
+		if( fk != null ){
+			String forignTableName = fk.forignTableName();
+			String forignKeyName = fk.forignKeyName();
+			//外键字段
+			//sql.append("";
+			//外键
+			//sql.append(",foreign key(" + forignKeyName + ") references " + forignTableName + "(id)");
+		}
+		
 		sql.append(")");
-			   
 		Connection conn = ConnectionFactory.getConnection();
 		PreparedStatement pstmt = null ;
 		try{
@@ -66,7 +74,6 @@ public class TableManager {
 				}
 			ConnectionFactory.revoke(conn);
 		}
-		
 		return true ;
 	}
 	/**

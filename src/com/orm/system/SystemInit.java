@@ -1,24 +1,27 @@
 package com.orm.system;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.orm.interpeter.PropertiesInterceptor;
+
 /**
  * 框架的启动类
  * @author Administrator
  *
  */
 public class SystemInit {
-	private static boolean isStartUp = false ;//是否启动
+	public static final Map<String, Class<?>> nameAndClassObject = 
+			new HashMap<String, Class<?>>();
 	
-	public static void systemInit(){
-		if( isStartUp == false ){
-			startUp();
-			isStartUp = true ;
-		}
+	static{
+		//系统配置文件读取.
+		String entityPath = PropertiesInterceptor.props.getProperty("entityPackageBase");
+		System.out.println(entityPath);
+		//获取实体类名、class对象map.
 	}
 	
-	//初始化applicationContext.xml(数据库连接信息)
-	//实体和数据库表的映射
-	//初始化数据库连接池类
-	private static boolean startUp(){
-		return false ;
+	public static void main(String[] ags){
+		System.out.println(System.getProperty("user.dir") + "****************");
 	}
 }

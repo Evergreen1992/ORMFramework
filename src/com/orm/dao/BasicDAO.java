@@ -42,6 +42,7 @@ public class BasicDAO<T> extends AnnotationInterceptor<T> {
 	 */
 	public boolean create(T entity){
 		String sql = generateInsertSql(entity);
+		System.out.println(sql);
 		return this.executeUpdate(sql) ;
 	}
 	/**
